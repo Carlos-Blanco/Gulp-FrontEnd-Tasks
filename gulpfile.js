@@ -32,3 +32,11 @@ gulp.task('image', function () {
     .pipe(image())
     .pipe(gulp.dest('./img'));
 });
+
+/* Run default tasks */
+gulp.task('default', ['sass','cssMinify','concat','image']);
+
+
+
+
+

@@ -9,28 +9,28 @@ var image = require('gulp-image');
 gulp.task('sass', function() {
   gulp.src('./scss/*.scss')
     .pipe(sass())
-    .pipe(gulp.dest('./'));
+    .pipe(gulp.dest('./css'));
 });
 
 /* CSS Minify */
 gulp.task('cssMinify', function() {
   gulp.src('./*.css')
     .pipe(cssMinify())
-    .pipe(gulp.dest('./'));
+    .pipe(gulp.dest('.build/css'));
 });
 
 /* JS Concat */
 gulp.task('concat', function() {
   gulp.src('./scripts/libs/*.js')
     .pipe(concat('all.js'))
-    .pipe(gulp.dest('./js/'))
+    .pipe(gulp.dest('.build/js/'))
 });
 
 /* Image Optimize */
 gulp.task('image', function () {
   gulp.src('./images/*')
     .pipe(image())
-    .pipe(gulp.dest('./img'));
+    .pipe(gulp.dest('.build/img'));
 });
 
 /* Run default tasks */

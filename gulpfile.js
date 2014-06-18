@@ -3,6 +3,7 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var cssMinify = require('gulp-minify-css');
 var concat = require('gulp-concat');
+var image = require('gulp-image');
 
 /* Compile Sass Task */
 gulp.task('sass', function() {
@@ -25,3 +26,9 @@ gulp.task('concat', function() {
     .pipe(gulp.dest('./js/'))
 });
 
+/* Image Optimize */
+gulp.task('image', function () {
+  gulp.src('./images/*')
+    .pipe(image())
+    .pipe(gulp.dest('./img'));
+});

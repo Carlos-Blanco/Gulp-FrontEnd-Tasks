@@ -1,26 +1,23 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var cssMinify = require('gulp-minify-css');
+var minifyCSS = require('gulp-minify-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
-var image = require('gulp-image');
 
-/* Compile Sass Task */
-gulp.task('sass', function() {
-  gulp.src('./css/scss/*.scss')
-    .pipe(sass())
-    .pipe(gulp.dest('./build/css'));
+/* Compile and Minify Sass Task */
+gulp.task('sass', function () {
+    gulp.src('./css/scss/*.scss')
+        .pipe(sass())
+        .pipe(gulp.dest('./css'))
+        .pipe(concat('style.css'))
+        .pipe(gulp.dest('./css'))
+        .pipe(minifyCSS())
+        .pipe(rename('style.min.css'))
+        .pipe(gulp.dest('./build/css'));
 });
 
-/* CSS Minify */
-gulp.task('cssMinify', function() {
-  gulp.src('./*.css')
-    .pipe(cssMinify())
-    .pipe(gulp.dest('./build/css'));
-});
-
-// Concatenate & Minify JS
+/* Concatenate & Minify JS */
 gulp.task('scripts', function() {
     return gulp.src('./js/*.js')
         .pipe(concat('all.js'))
@@ -30,15 +27,14 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest('./build/js'));
 });
 
-/* Image Optimize */
-// gulp.task('image', function () {
-//   gulp.src('./images/*')
-//     .pipe(image())
-//     .pipe(gulp.dest('.build/img'));
-// });
+// Watch Files For Changes
+gulp.task('watch', function() {
+    gulp.watch('./js/*.js', ['lint', 'scripts']);
+    gulp.watch('./css/scss/*.scss', ['sass']);
+});
 
 /* Run default tasks */
-gulp.task('default', ['sass','cssMinify','scripts']);
+gulp.task('default', ['sass','scripts']);
 
 
 

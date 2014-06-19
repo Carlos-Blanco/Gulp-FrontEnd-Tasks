@@ -1,7 +1,9 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var cssMinify = require('gulp-minify-css');
+var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var rename = require('gulp-rename');
 var image = require('gulp-image');
 
 /* Compile Sass Task */
@@ -18,11 +20,14 @@ gulp.task('cssMinify', function() {
     .pipe(gulp.dest('./build/css'));
 });
 
-/* JS Uglify */
-gulp.task('uglify', function() {
-  gulp.src('./js/*.js')
-    .pipe(uglify())
-    .pipe(gulp.dest('./build/js'))
+// Concatenate & Minify JS
+gulp.task('scripts', function() {
+    return gulp.src('./js/*.js')
+        .pipe(concat('all.js'))
+        .pipe(gulp.dest('./build/js'))
+        .pipe(rename('all.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('./build/js'));
 });
 
 /* Image Optimize */
@@ -33,7 +38,7 @@ gulp.task('uglify', function() {
 // });
 
 /* Run default tasks */
-gulp.task('default', ['sass','cssMinify','uglify']);
+gulp.task('default', ['sass','cssMinify','scripts']);
 
 
 

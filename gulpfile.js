@@ -1,10 +1,18 @@
 var gulp = require('gulp');
+var imagemin = require('gulp-imagemin');
 var sass = require('gulp-sass');
 var minifyCSS = require('gulp-minify-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var watch = require('gulp-watch');
+
+/* Minify images */
+gulp.task('images-opt', function () {
+    gulp.src('images-orig/*.*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('images'));
+});
 
 /* Compile and Minify Sass Task */
 gulp.task('sass', function () {
@@ -35,7 +43,7 @@ gulp.task('watch', function() {
 });
 
 /* Run default tasks */
-gulp.task('default', ['sass','scripts','watch']);
+gulp.task('default', ['images-opt','sass','scripts','watch']);
 
 
 

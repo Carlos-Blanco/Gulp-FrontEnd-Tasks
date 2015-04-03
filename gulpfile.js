@@ -9,7 +9,7 @@ var watch = require('gulp-watch');
 
 /* Minify images */
 gulp.task('images-opt', function () {
-    gulp.src('./images-orig/*.*')
+    gulp.src('./images/*.*')
         .pipe(imagemin())
         .pipe(gulp.dest('./build/images'));
 });
